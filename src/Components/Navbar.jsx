@@ -8,27 +8,30 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { Link as RouterLink } from "react-router-dom";
 
 //import { VscTriangleDown } from "react-icons/vsc";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getCartData } from "../Redux/AppReducer/action";
+import { getLocalData } from "../Utils/localStorage";
 
 const Navbar = () => {
   const cart = useSelector((store) => store.AppReducer.cart);
   const isAuth = useSelector((store) => store.AuthReducer.isAuth);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
+  let token = getLocalData("token");
+
   const totalCount = cart
-  ?.map((item) =>  item.count)
-  .reduce((prev, curr) => prev + curr, 0);
-  
-  useEffect(()=>{
-    dispatch(getCartData())
-  },[])
+    ?.map((item) => item.count)
+    .reduce((prev, curr) => prev + curr, 0);
+
+  useEffect(() => {
+    dispatch(getCartData());
+  }, []);
 
   return (
-    <div className="navbar" >
-      <div className="first_row" >
+    <div className="navbar">
+      <div className="first_row">
         FOR ONLINE PAYMENT EXTRA ₹100 DISCOUNT ON ORDERS ABOVE ₹500
       </div>
-      <div className="second_row" >
+      <div className="second_row">
         <div className="search_box">
           <div className="box">
             <input
@@ -50,17 +53,19 @@ const Navbar = () => {
             />
           </div>
           <div className="iconsDiv">
-
-          <div className="second">
-          <RouterLink to={isAuth === false ? "/login" : "/myaccount"}><MdAccountCircle size="35px" /></RouterLink>
+            <div className="second">
+              <RouterLink to={isAuth === false ? "/login" : "/myaccount"}>
+                <MdAccountCircle size="35px" />
+              </RouterLink>
             </div>
             <div className="third">
-            <RouterLink to="/cart"><FaCartPlus size="35px" /></RouterLink>
+              <RouterLink to="/cart">
+                <FaCartPlus size="35px" />
+              </RouterLink>
             </div>
-            
+
             <div className="CartCount">
               <p>({totalCount})</p>
-
             </div>
           </div>
         </div>
@@ -75,23 +80,38 @@ const Navbar = () => {
             <div className="drop_down_content">
               <div className="content">
                 <h3 className="tag1">
-                  Fashion <ChevronRightIcon/>
+                  Fashion <ChevronRightIcon />
                   <div className="drop_down_content1">
                     <div className="content1">
                       <div className="sub_content">
                         <div>
+                          <b>
+                            <RouterLink to="/product-category/footwear">
+                              <p className="wear1">Foot Wear</p>
+                            </RouterLink>
+                          </b>
+                          <b>
+                            <RouterLink to="/product-category/Mensfootwear">
+                              <p className="wear1">Men's footwear</p>
+                            </RouterLink>
+                          </b>
 
-                        
+                          <RouterLink to="/product-category/casualslippers">
+                            <p className="wear1">Casual Chapple/Slippers</p>
+                          </RouterLink>
 
-                          <b><RouterLink to="/product-category/footwear"><p className="wear1">Foot Wear</p></RouterLink></b>
-                          <b><RouterLink to="/product-category/Mensfootwear"><p className="wear1">Men's footwear</p></RouterLink></b>
-
-                          <RouterLink to="/product-category/casualslippers"><p className="wear1">Casual Chapple/Slippers</p></RouterLink>
-
-                          <RouterLink to="/product-category/casual-sandals"><p className="wear1">Casual Sandals</p></RouterLink>
-                          <RouterLink to="/product-category/casual-partyshoes"><p className="wear1">Casual/Party Shoes</p></RouterLink>
-                          <RouterLink to="/product-category/chappal-slippers"><p className="wear1">Chappal/Slippers</p></RouterLink>
-                          <RouterLink to="/product-category/FlipFlops"><p className="wear1">FlipFlops</p></RouterLink>
+                          <RouterLink to="/product-category/casual-sandals">
+                            <p className="wear1">Casual Sandals</p>
+                          </RouterLink>
+                          <RouterLink to="/product-category/casual-partyshoes">
+                            <p className="wear1">Casual/Party Shoes</p>
+                          </RouterLink>
+                          <RouterLink to="/product-category/chappal-slippers">
+                            <p className="wear1">Chappal/Slippers</p>
+                          </RouterLink>
+                          <RouterLink to="/product-category/FlipFlops">
+                            <p className="wear1">FlipFlops</p>
+                          </RouterLink>
                           <p className="wear1">Crocs</p>
                           <p className="wear1">Loafers</p>
                           <p className="wear1">Mojdi</p>
@@ -122,10 +142,20 @@ const Navbar = () => {
                     <div className="content1">
                       <div className="sub_content">
                         <div>
-                          <b><RouterLink to="/product-category/Kitchenware"><p className="wear1">Kitchen Ware</p></RouterLink></b>
-                          <RouterLink to="/product-category/airTight"><p className="wear1">Air Tight Containers</p></RouterLink>
-                          <RouterLink to="/product-category/Kitchenware-GasLighter"><p className="wear1">Gas Lighters</p></RouterLink>
-                          <RouterLink to="/product-category/Kitchenware-Tools"><p className="wear1">Kitchen Tools</p></RouterLink>
+                          <b>
+                            <RouterLink to="/product-category/Kitchenware">
+                              <p className="wear1">Kitchen Ware</p>
+                            </RouterLink>
+                          </b>
+                          <RouterLink to="/product-category/airTight">
+                            <p className="wear1">Air Tight Containers</p>
+                          </RouterLink>
+                          <RouterLink to="/product-category/Kitchenware-GasLighter">
+                            <p className="wear1">Gas Lighters</p>
+                          </RouterLink>
+                          <RouterLink to="/product-category/Kitchenware-Tools">
+                            <p className="wear1">Kitchen Tools</p>
+                          </RouterLink>
                         </div>
                         <div>
                           <p className="wear">Household Supplies</p>
@@ -224,13 +254,11 @@ const Navbar = () => {
         </div>
         <RouterLink
           className="bar1"
-          to={isAuth === false ? "/login" : "/myaccount"}
+          to={token === false ? "/login" : "/myaccount"}
         >
           Customer/Guest login
         </RouterLink>
-        <p className="bar1">
-          Merchant/Bulk Order
-        </p>
+        <p className="bar1">Merchant/Bulk Order</p>
         <RouterLink className="bar1" to="/BestSeller">
           Become A Seller
         </RouterLink>
