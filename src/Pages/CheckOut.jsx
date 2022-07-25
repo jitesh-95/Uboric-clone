@@ -27,7 +27,7 @@ import { MdOutlineArrowRightAlt } from "react-icons/md";
 import { RiArrowDropRightLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { getCartData, makeCartEmpty } from "../Redux/AppReducer/action";
+import { deleteCartItem, getCartData } from "../Redux/AppReducer/action";
 
 // let countDown = 5;
 
@@ -58,8 +58,10 @@ const CheckOut = () => {
       }
       if (i < 0) {
         clearInterval(interval);
-        // dispatch(makeCartEmpty());
-        // dispatch(getCartData());
+        cart.forEach((item) => {
+          dispatch(deleteCartItem(item.id));
+        });
+        dispatch(getCartData());
         navigate("/");
       }
     }, 1000);
