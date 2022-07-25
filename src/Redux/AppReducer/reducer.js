@@ -90,6 +90,25 @@ const reducer = (state = initialState, action) => {
         isLoading: false,
         isError: true,
       };
+    case types.DELETE_CARTITEM_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case types.DELETE_CARTITEM_SUCCESS:
+      return {
+        ...state,
+        cart: [],
+        isLoading: false,
+        isError: false,
+      };
+    case types.DELETE_CARTITEM_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
     default:
       return state;
   }
